@@ -1,0 +1,70 @@
+//recursive travrsal takes o(n)time and o(n) auxillary space;
+//morris traversal takes o(n)time with linear space complexity;
+//morris traversal uses a concept of threaded binary tree.
+
+//1st case
+   left->NULL.......print--root and move to right part of tree.
+//2nd case
+  left <<< rightmost guy on left subtree------>curr<<< move curr to left.
+//3rd case
+if there is a thread between rightmost guy on left subtree--->cur << remove thread << move curr to right.
+
+vector<int>getInorder(TreeNode* root){
+    vector<int>inorder;
+    TreeNode *curr = root;
+    while(curr !=NULL){
+        if(curr->left == NULL){
+            inorder.push_back(curr->val);
+            curr= curr->right;
+         }
+        else{
+            TreeNode* prev = curr->left;
+            while(prev->right && prev->right!=curr){
+                prev = prev->right;
+            }
+            
+            if(prev->right == NULL){
+                prev->right = curr;
+                curr = curr->left;
+            }
+            else{
+                prev->right = NULL;
+                inorder.push_back(curr.val);
+                curr= curr->right;
+            }
+        }
+    }
+return inorder;
+}
+
+
+
+....morris preorder
+
+vector<int>getPreorder(TreeNode* root){
+    vector<int>Preorder;
+    TreeNode *curr = root;
+    while(curr !=NULL){
+        if(curr->left == NULL){
+            Preorder.push_back(curr->val);
+            curr= curr->right;
+         }
+        else{
+            TreeNode* prev = curr->left;
+            while(prev->right && prev->right!=curr){
+                prev = prev->right;
+            }
+            
+            if(prev->right == NULL){
+                prev->right = curr;
+               Preorder.push_back(curr.val);
+                curr = curr->left;
+            }
+            else{
+                prev->right = NULL;
+                curr= curr->right;
+            }
+        }
+    }
+return Preorder;
+}
